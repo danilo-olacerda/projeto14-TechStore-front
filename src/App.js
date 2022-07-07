@@ -3,6 +3,7 @@ import { useState } from "react";
 import UserContext from "./contexts/UserContext";
 import Register from "./components/Register/Register.js";
 import Login from "./components/Login/Login.js";
+import Body from "./components/Body/Body";
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
         <Routes>
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path = "/" element ={<Body/>}/>
         </Routes>
       </UserContext.Provider>
     </BrowserRouter>
