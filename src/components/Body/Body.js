@@ -12,7 +12,7 @@ export default function Body(){
                 console.log(response.data);
                 setItens(response.data);
             }catch(error){
-                alert(error);
+                //alert(error);
             }
         }
         listItens();
