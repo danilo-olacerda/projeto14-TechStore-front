@@ -5,7 +5,7 @@ import UserContext from "../../contexts/UserContext";
 
 export default function Header ({cart}){
     const {token} = useContext(UserContext);
-    const[isLogged, setIsLogged]= useState(false)
+    const[isLogged, setIsLogged]= useState(false);
     const[CartValue, setCartValue]= useState(0);;
 
     useEffect(()=>{
@@ -38,12 +38,14 @@ export default function Header ({cart}){
                     <h1>
                         Techstore
                     </h1>
-                        <CartDiv>
-                            <ion-icon name="cart-outline"></ion-icon>
-                            <CartNumber>
-                                {CartValue}
-                            </CartNumber>
-                        </CartDiv>
+                        <Link to = {"/cart"} style ={{textDecoration:'none'}}>
+                            <CartDiv>
+                                <ion-icon name="cart-outline"></ion-icon>
+                                <CartNumber>
+                                    {CartValue}
+                                </CartNumber>
+                            </CartDiv>
+                        </Link>
                         <Link to ={"/register"} style ={{textDecoration:'none'}}>
                             <ion-icon name="create-outline"></ion-icon>
                         </Link>

@@ -25,7 +25,7 @@ export default function Body(){
         const findIndex = cartStorage.find(item => item.index === newCart.index);
         if(method){
             if(findIndex){
-                cartStorage.pop(findIndex);
+                cartStorage.splice(findIndex,1);
                 cartStorage.push(newCart);
             }else{
                 cartStorage.push(newCart);
@@ -35,10 +35,10 @@ export default function Body(){
 
         }else{
             if(newCart.quantity>0){
-                cartStorage.pop(findIndex);
+                cartStorage.splice(findIndex,1);
                 cartStorage.push(newCart);
             }else{
-                cartStorage.pop(findIndex);
+                cartStorage.splice(findIndex,1);
             }
             setCart([...cartStorage]);
             sessionStorage.setItem("cart",JSON.stringify(cartStorage));
@@ -115,7 +115,7 @@ export default function Body(){
                     })
                 }
             }catch(error){
-                //alert(error);
+                alert(error);
             }
         }
         listItens();
@@ -124,53 +124,63 @@ export default function Body(){
     return(
         <>
             <Header cart ={cart}/>
-            <BodyDiv>
-                {(itens.map((item, index)=>{
-                    const {quantity, value, name, image}= item;
-                    return(
-                        <>
-                            <ItemDiv key={index}>
-                                <ImgDiv key={index}>
-                                    <img src={image} alt= "nao tem" />
-                                </ImgDiv>
-                                <h1>{name}</h1>
-                                <h1>Qtd Disponivel:{quantity}</h1>
-                                <h1>Valor:R${value}</h1>
-                                <CartDiv>
-                                    <ButtonItem 
-                                        color = {!color} 
-                                        enable={enableRemove[index]} 
-                                        disabled={!enableRemove[index]}
-                                        onClick={()=> removeCart(index, name, value, image)}>
-                                        -
-                                    </ButtonItem>
-                                    <h2>
-                                        {qtd[index]}
-                                    </h2>
-                                    <ButtonItem 
-                                        color ={color} 
-                                        enable={enableAdd[index]} 
-                                        disabled={!enableAdd[index]} 
-                                        onClick={()=>addCart(index, quantity, name, value, image)}>
-                                        +
-                                    </ButtonItem>
-                                </CartDiv>
-                            </ItemDiv>
-                        </>
-                    );
-                }))}
-            </BodyDiv>
+            <MainContainer>
+                <BodyDiv>
+                    {(itens.map((item, index)=>{
+                        const {quantity, value, name, image}= item;
+                        return(
+                            <>
+                                <ItemDiv key={index}>
+                                    <ImgDiv key={index}>
+                                        <img src={image} alt= "nao tem" />
+                                    </ImgDiv>
+                                    <h1>{name}</h1>
+                                    <h1>Qtd Disponivel:{quantity}</h1>
+                                    <h1>Valor:R${value}</h1>
+                                    <CartDiv>
+                                        <ButtonItem 
+                                            color = {!color} 
+                                            enable={enableRemove[index]} 
+                                            disabled={!enableRemove[index]}
+                                            onClick={()=> removeCart(index, name, value, image)}>
+                                            -
+                                        </ButtonItem>
+                                        <h2>
+                                            {qtd[index]}
+                                        </h2>
+                                        <ButtonItem 
+                                            color ={color} 
+                                            enable={enableAdd[index]} 
+                                            disabled={!enableAdd[index]} 
+                                            onClick={()=>addCart(index, quantity, name, value, image)}>
+                                            +
+                                        </ButtonItem>
+                                    </CartDiv>
+                                </ItemDiv>
+                            </>
+                        );
+                    }))}
+                </BodyDiv>
+            </MainContainer>
             <Footer/>
-        </>
+            </>
     );
 }
 
+const MainContainer = styled.div`
+    max-height: 100%;
+    max-width: 100vw;
+    overflow-y: hidden;
+`;
+
 const BodyDiv = styled.div `
-    height: 60%;
+    box-sizing: border-box;
+    height: 60vh;
     width: 80%;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+    overflow-y: scroll;
     justify-content: space-between;
     margin-top: 130px;
     margin-left: 11%;

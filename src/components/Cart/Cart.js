@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
 import CartItem from "./CartItem.js";
+import Header from "../Header/Header.js";
 
 export default function Cart(){
 
@@ -39,31 +40,33 @@ export default function Cart(){
     }
 
     return(
-        <Container>
-            Header
-            <Line/>
-            <PageTitle>
-                Carrinho
-            </PageTitle>
-            <Line/>
-            <CartContainer>
-                <p>Resumo da compra</p>
-                <CartItems>
-                    {cart.length!==0 ? cart.map((e, i)=> <CartItem setTotalValue={setTotalValue} calcTotalValue={calcTotalValue} value={e.value} itemQuantity={e.quantity} name={e.name} key={i} index={i} cart={cart} image={e.image} setCart={setCart}/>): "Você ainda não tem itens no carrinho!"}
-                </CartItems>
-                <span>
-                    <div>
-                        <p>Valor Total: </p>
-                        <p>R$ {totalValue ? totalValue.toFixed(2).replace(".", ",") : "0,00"}</p>
-                    </div>
-                    <button onClick={finalize}>
-                        Finalizar Compra
-                    </button>
-                </span>
-            </CartContainer>
-            <Line/>
-            Footer
-        </Container>
+        <>
+        <Header cart={cart}/>
+            <Container>
+                <Line/>
+                <PageTitle>
+                    Carrinho
+                </PageTitle>
+                <Line/>
+                <CartContainer>
+                    <p>Resumo da compra</p>
+                    <CartItems>
+                        {cart.length!==0 ? cart.map((e, i)=> <CartItem setTotalValue={setTotalValue} calcTotalValue={calcTotalValue} value={e.value} itemQuantity={e.quantity} name={e.name} key={i} index={i} cart={cart} image={e.image} setCart={setCart}/>): "Você ainda não tem itens no carrinho!"}
+                    </CartItems>
+                    <span>
+                        <div>
+                            <p>Valor Total: </p>
+                            <p>R$ {totalValue ? totalValue.toFixed(2).replace(".", ",") : "0,00"}</p>
+                        </div>
+                        <button onClick={finalize}>
+                            Finalizar Compra
+                        </button>
+                    </span>
+                </CartContainer>
+                <Line/>
+                Footer
+            </Container>
+        </>
     )
 };
 
