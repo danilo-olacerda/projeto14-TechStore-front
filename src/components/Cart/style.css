@@ -1,8 +1,0 @@
-body {
-    min-height: calc(100% - 100px);
-    max-height: 100%;
-}
-#root {
-    min-height: calc(100% - 100px);
-    max-height: 100%;
-}

@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import CartItem from "./CartItem.js";
 import Header from "../Header/Header.js";
 import Footer from "../Footer/Footer.js";
-//import styles from "./style.css";
 
 export default function Cart() {
 
@@ -72,7 +71,7 @@ export default function Cart() {
 
 const Container = styled.div`
     margin-top: 100px;
-    height: 100%;
+    height: calc(100% - 100px);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -90,7 +89,7 @@ const Line = styled.div`
     margin-bottom: 23px;
 `;
 const CartContainer = styled.div`
-    max-height: 300px;
+    height: 300px;
     width: calc(100% - 50px);
     display: flex;
     flex-direction: column;

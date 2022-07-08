@@ -56,7 +56,7 @@ export default function Register() {
 };
 
 const Container = styled.div`
-    height: 100%;
+    height: 100vh;
     background-color: #FFFFFF;
     display: flex;
     align-items: center;
