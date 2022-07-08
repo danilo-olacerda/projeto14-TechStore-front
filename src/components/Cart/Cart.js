@@ -7,20 +7,28 @@ export default function Cart(){
     let cartItems = sessionStorage.getItem('cart');
     cartItems = JSON.parse(cartItems);
 
-    const [cart, setCart] = useState(cartItems);
+    const [cart, setCart] = useState([]);
     const [totalValue, setTotalValue] = useState(calcTotalValue());
+
+    useEffect(()=>{
+        if (cartItems){
+            setCart(cartItems);
+        }
+    },[])
     
     async function finalize(){
         if(totalValue!==0){
             console.log("Checkout");
             return;
         }
-        alert("Adicione pelo menos um item ao carrinho!")
+        alert("Adicione pelo menos um item ao carrinho!");
     }
 
     function calcTotalValue(){
 
         cartItems = sessionStorage.getItem('cart');
+        if (cartItems===null)
+        return;
         let total = 0;
         cartItems = JSON.parse(cartItems);
     
@@ -41,12 +49,12 @@ export default function Cart(){
             <CartContainer>
                 <p>Resumo da compra</p>
                 <CartItems>
-                    {cart.length!==0 ? cart.map((e, i)=> <CartItem setTotalValue={setTotalValue} calcTotalValue={calcTotalValue} value={e.value} itemQuantity={e.itemQuantity} name={e.nome} key={i} index={i} cart={cart} setCart={setCart}/>): "Você ainda não tem itens no carrinho!"}
+                    {cart.length!==0 ? cart.map((e, i)=> <CartItem setTotalValue={setTotalValue} calcTotalValue={calcTotalValue} value={e.value} itemQuantity={e.quantity} name={e.name} key={i} index={i} cart={cart} image={e.image} setCart={setCart}/>): "Você ainda não tem itens no carrinho!"}
                 </CartItems>
                 <span>
                     <div>
                         <p>Valor Total: </p>
-                        <p>R$ {totalValue.toFixed(2).replace(".", ",")}</p>
+                        <p>R$ {totalValue ? totalValue.toFixed(2).replace(".", ",") : "0,00"}</p>
                     </div>
                     <button onClick={finalize}>
                         Finalizar Compra
@@ -125,4 +133,5 @@ const CartItems = styled.div`
     margin-bottom: 20px;
     display: flex;
     flex-direction: column;
+    border-radius: 8px;
 `

@@ -1,16 +1,21 @@
 import styled from "styled-components"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export default function CartItem({cart, setCart, index, name, value, itemQuantity, calcTotalValue, setTotalValue}){
+export default function CartItem({image, cart, setCart, index, name, value, itemQuantity, calcTotalValue, setTotalValue}){
 
     const [quantity, setQuatity] = useState(itemQuantity);
+
+    useEffect(()=>{
+        setQuatity(itemQuantity);
+    },[itemQuantity])
 
     function add(){
         setQuatity(quantity + 1);
         cart[index].itemQuantity++;
         const newCart = JSON.stringify(cart);
         sessionStorage.setItem('cart', newCart);
-        setCart([...cart]);
+        const cartAtt = [...cart];
+        setCart(cartAtt);
         setTotalValue(calcTotalValue());
     }
     function remove(){
@@ -20,21 +25,24 @@ export default function CartItem({cart, setCart, index, name, value, itemQuantit
                 cart.splice(index, 1);
                 const newCart = JSON.stringify(cart);
                 sessionStorage.setItem('cart', newCart);
+                setTotalValue(calcTotalValue());
             }
-            setTotalValue(calcTotalValue());
+            const cartAtt = [...cart];
+            setCart(cartAtt);
             return;
         }
         cart[index].itemQuantity--;
         const newCart = JSON.stringify(cart);
         sessionStorage.setItem('cart', newCart);
         setQuatity(quantity - 1);
-        setCart([...cart]);
+        const cartAtt = [...cart];
+        setCart(cartAtt);
         setTotalValue(calcTotalValue());
     }
 
     return(
         <Container>
-            <img src="https://i0.wp.com/www.jbox.com.br/wp/wp-content/uploads/2021/10/narutofeliz-destacada.jpg?fit=774%2C489&quality=99&strip=all&ssl=1" alt="" />
+            <img src={image} alt="" />
             
             <div>
                 <h3>{name}</h3>
