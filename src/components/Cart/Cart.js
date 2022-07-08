@@ -33,7 +33,7 @@ export default function Cart(){
         cartItems = JSON.parse(cartItems);
     
         for (let i = 0; i<cartItems.length; i++){
-            total+=(cartItems[i].value*cartItems[i].itemQuantity);
+            total+=(cartItems[i].value*cartItems[i].quantity);
         }
         return total;
     }
