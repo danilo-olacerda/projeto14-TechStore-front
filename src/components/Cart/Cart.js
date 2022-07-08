@@ -2,22 +2,32 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 import CartItem from "./CartItem.js";
 
-let cartItems = sessionStorage.getItem('cart');
-cartItems = JSON.parse(cartItems);
-//JSON.parse() e JSON.stringify()
-//sessionStorage.setItem('cart', '')
-
 export default function Cart(){
 
-    const [cart, setCart] = useState();
+    let cartItems = sessionStorage.getItem('cart');
+    cartItems = JSON.parse(cartItems);
 
-    useEffect(()=>{
-        console.log(cartItems)
-        setCart(cartItems);
-    },[])
+    const [cart, setCart] = useState(cartItems);
+    const [totalValue, setTotalValue] = useState(calcTotalValue());
     
     async function finalize(){
-        console.log("Koe")
+        if(totalValue!==0){
+            console.log("Checkout");
+            return;
+        }
+        alert("Adicione pelo menos um item ao carrinho!")
+    }
+
+    function calcTotalValue(){
+
+        cartItems = sessionStorage.getItem('cart');
+        let total = 0;
+        cartItems = JSON.parse(cartItems);
+    
+        for (let i = 0; i<cartItems.length; i++){
+            total+=(cartItems[i].value*cartItems[i].itemQuantity);
+        }
+        return total;
     }
 
     return(
@@ -31,9 +41,13 @@ export default function Cart(){
             <CartContainer>
                 <p>Resumo da compra</p>
                 <CartItems>
-                    {cart ? cart.map((e, i)=> <CartItem key={i}/>): "Você ainda não tem itens no carrinho!"}
+                    {cart.length!==0 ? cart.map((e, i)=> <CartItem setTotalValue={setTotalValue} calcTotalValue={calcTotalValue} value={e.value} itemQuantity={e.itemQuantity} name={e.nome} key={i} index={i} cart={cart} setCart={setCart}/>): "Você ainda não tem itens no carrinho!"}
                 </CartItems>
                 <span>
+                    <div>
+                        <p>Valor Total: </p>
+                        <p>R$ {totalValue.toFixed(2).replace(".", ",")}</p>
+                    </div>
                     <button onClick={finalize}>
                         Finalizar Compra
                     </button>
@@ -81,7 +95,13 @@ const CartContainer = styled.div`
         display: flex;
         align-items: center;
         justify-content: center;
+        flex-direction: column;
         width: 100%;
+        > div {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
     }
     button {
         font-weight: 400;

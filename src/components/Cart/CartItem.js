@@ -1,17 +1,35 @@
 import styled from "styled-components"
 import { useState } from "react";
 
-export default function CartItem(){
+export default function CartItem({cart, setCart, index, name, value, itemQuantity, calcTotalValue, setTotalValue}){
 
-    const [quantity, setQuatity] = useState(0);
+    const [quantity, setQuatity] = useState(itemQuantity);
 
     function add(){
         setQuatity(quantity + 1);
+        cart[index].itemQuantity++;
+        const newCart = JSON.stringify(cart);
+        sessionStorage.setItem('cart', newCart);
+        setCart([...cart]);
+        setTotalValue(calcTotalValue());
     }
     function remove(){
-        if (quantity===0)
-        return;
+        if (quantity===1){
+            const confirmDelete = window.confirm("Deseja retirar o item do carrinho ?");
+            if (confirmDelete) {
+                cart.splice(index, 1);
+                const newCart = JSON.stringify(cart);
+                sessionStorage.setItem('cart', newCart);
+            }
+            setTotalValue(calcTotalValue());
+            return;
+        }
+        cart[index].itemQuantity--;
+        const newCart = JSON.stringify(cart);
+        sessionStorage.setItem('cart', newCart);
         setQuatity(quantity - 1);
+        setCart([...cart]);
+        setTotalValue(calcTotalValue());
     }
 
     return(
@@ -19,8 +37,8 @@ export default function CartItem(){
             <img src="https://i0.wp.com/www.jbox.com.br/wp/wp-content/uploads/2021/10/narutofeliz-destacada.jpg?fit=774%2C489&quality=99&strip=all&ssl=1" alt="" />
             
             <div>
-                <h3>Product Name</h3>
-                <h3>R$ 14,99</h3>
+                <h3>{name}</h3>
+                <h3>R$ {value.toFixed(2).replace(".",",")}</h3>
                 <h3>This is a good product</h3>
             </div>
             <Quantity>
