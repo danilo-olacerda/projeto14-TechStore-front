@@ -168,7 +168,7 @@ export default function Body(){
 }
 
 const MainContainer = styled.div`
-    max-height: 100%;
+    max-height: 100vh;
     max-width: 100vw;
     overflow-y: hidden;
 `;
