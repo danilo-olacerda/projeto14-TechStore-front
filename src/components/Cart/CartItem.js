@@ -11,7 +11,7 @@ export default function CartItem({image, cart, setCart, index, name, value, item
 
     function add(){
         setQuatity(quantity + 1);
-        cart[index].itemQuantity++;
+        cart[index].quantity++;
         const newCart = JSON.stringify(cart);
         sessionStorage.setItem('cart', newCart);
         const cartAtt = [...cart];
@@ -25,13 +25,13 @@ export default function CartItem({image, cart, setCart, index, name, value, item
                 cart.splice(index, 1);
                 const newCart = JSON.stringify(cart);
                 sessionStorage.setItem('cart', newCart);
-                setTotalValue(calcTotalValue());
             }
+            setTotalValue(calcTotalValue());
             const cartAtt = [...cart];
             setCart(cartAtt);
             return;
         }
-        cart[index].itemQuantity--;
+        cart[index].quantity--;
         const newCart = JSON.stringify(cart);
         sessionStorage.setItem('cart', newCart);
         setQuatity(quantity - 1);
