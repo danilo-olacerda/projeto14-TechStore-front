@@ -59,6 +59,7 @@ export default function Header ({cart}){
 }
 
 export const HeaderDiv = styled.div`
+    background-color: #FFFFFF;
     position: fixed;
     width: 100%;
     height: 100px;

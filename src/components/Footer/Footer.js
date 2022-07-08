@@ -9,6 +9,7 @@ export default function Footer(){
 }
 
 const FooterDiv = styled.div`
+    background-color: #FFFFFF;
     position: fixed;
     display: flex;
     align-items: center;
@@ -16,7 +17,7 @@ const FooterDiv = styled.div`
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 120px;
+    height: 60px;
     border-top: 1px solid black;
     h1{
         font-family: 'Rubik Moonrocks';
