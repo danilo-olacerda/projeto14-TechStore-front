@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
+import Header from "../Header/Header";
+import Footer from "../Footer/Footer";
 
 export default function Body(){
     const color = true;
@@ -120,53 +122,60 @@ export default function Body(){
     },[]);
 
     return(
-        <BodyDiv>
-            {(itens.map((item, index)=>{
-                const {quantity, value, name, image}= item;
-                return(
-                    <>
-                        <ItemDiv key={index}>
-                            <ImgDiv key={index}>
-                                <img src={image} alt= "nao tem" />
-                            </ImgDiv>
-                            <h1>{name}</h1>
-                            <h1>Qtd Disponivel {quantity}</h1>
-                            <h1>Valor:{value}R$</h1>
-                            <CartDiv>
-                                <ButtonItem 
-                                    color = {!color} 
-                                    enable={enableRemove[index]} 
-                                    disabled={!enableRemove[index]}
-                                    onClick={()=> removeCart(index, name, value, image)}>
-                                    -
-                                </ButtonItem>
-                                <h2>
-                                    {qtd[index]}
-                                </h2>
-                                <ButtonItem 
-                                    color ={color} 
-                                    enable={enableAdd[index]} 
-                                    disabled={!enableAdd[index]} 
-                                    onClick={()=>addCart(index, quantity, name, value, image)}>
-                                    +
-                                </ButtonItem>
-                            </CartDiv>
-                        </ItemDiv>
-                    </>
-                );
-            }))}
-        </BodyDiv>
+        <>
+            <Header cart ={cart}/>
+            <BodyDiv>
+                {(itens.map((item, index)=>{
+                    const {quantity, value, name, image}= item;
+                    return(
+                        <>
+                            <ItemDiv key={index}>
+                                <ImgDiv key={index}>
+                                    <img src={image} alt= "nao tem" />
+                                </ImgDiv>
+                                <h1>{name}</h1>
+                                <h1>Qtd Disponivel:{quantity}</h1>
+                                <h1>Valor:R${value}</h1>
+                                <CartDiv>
+                                    <ButtonItem 
+                                        color = {!color} 
+                                        enable={enableRemove[index]} 
+                                        disabled={!enableRemove[index]}
+                                        onClick={()=> removeCart(index, name, value, image)}>
+                                        -
+                                    </ButtonItem>
+                                    <h2>
+                                        {qtd[index]}
+                                    </h2>
+                                    <ButtonItem 
+                                        color ={color} 
+                                        enable={enableAdd[index]} 
+                                        disabled={!enableAdd[index]} 
+                                        onClick={()=>addCart(index, quantity, name, value, image)}>
+                                        +
+                                    </ButtonItem>
+                                </CartDiv>
+                            </ItemDiv>
+                        </>
+                    );
+                }))}
+            </BodyDiv>
+            <Footer/>
+        </>
     );
 }
 
 const BodyDiv = styled.div `
-    height: auto;
-    width: 100%;
+    height: 60%;
+    width: 80%;
     display: flex;
     flex-wrap: wrap;
-    align-items: flex-start;
-    justify-content: space-evenly;
-    margin-top: 200px;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 130px;
+    margin-left: 11%;
+    border: 1px solid black;
+    background-color: rgb(0,0,0,0);
 `;
 const ItemDiv = styled.div`
     height: 90px;
@@ -211,6 +220,7 @@ const ImgDiv = styled.div`
     justify-content: center;
     border-radius: 10px;
     border: 1px solid ;
+    margin-left: 30px;
     img{
         height: 40px;
         width: 40px;
