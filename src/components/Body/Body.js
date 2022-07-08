@@ -8,11 +8,46 @@ export default function Body(){
     const[qtd, setQtd]= useState([]);
     const[enableAdd, setEnableAdd]=useState([]);
     const[enableRemove, setEnableRemove]= useState([]);
+    const [cart, setCart]= useState(JSON.parse(sessionStorage.getItem("cart")|| "[]"));
 
-    function addCart(index, quantity){
+    function refreshCart(index, name, value, image, method){
+        const cartStorage = cart;
+        sessionStorage.removeItem("cart");
+        const newCart ={
+            index: index,
+            name: name,
+            value: value,
+            image: image,
+            quantity: qtd[index]
+        };
+        const findIndex = cartStorage.find( item => item.index === newCart.index);
+        if(method){
+            if(findIndex){
+                cartStorage.pop(findIndex);
+                cartStorage.push(newCart);
+            }else{
+                cartStorage.push(newCart);
+            }
+            setCart([...cartStorage]);
+            sessionStorage.setItem("cart",JSON.stringify(cartStorage));
+
+        }else{
+            if(newCart.quantity>1){
+                cartStorage.pop(findIndex);
+                cartStorage.push(newCart);
+            }else{
+                cartStorage.pop(findIndex);
+            }
+            setCart([...cartStorage]);
+            sessionStorage.setItem("cart",JSON.stringify(cartStorage));
+        }
+    }
+
+    function addCart(index, quantity, name, value, image){
         const arr = qtd;
         const arrRemove = enableRemove;
         const arrAdd = enableAdd;
+        const method = true;
         arr[index]= 1 +arr[index];
         setQtd([...arr]);
         if(qtd[index] >= quantity){
@@ -22,12 +57,14 @@ export default function Body(){
             arrRemove[index]= true;
             setEnableRemove([...arrRemove]);
         }
+        refreshCart(index, name, value, image, method);
     }
     
-    function removeCart(index,quantity){
+    function removeCart(index, name, value, image){
         const arr = qtd;
         const arrRemove = enableRemove;
         const arrAdd = enableAdd;
+        const method = false;
         if(enableRemove[index]){
             if(arr[index]>= 1){
                 arr[index]= arr[index]- 1;
@@ -41,9 +78,9 @@ export default function Body(){
             }else{
                 arrRemove[index] = false;
                 setEnableRemove([...arrRemove]);
-            }
-            
+            } 
         }
+        refreshCart(index, name, value, image, method);
     }
 
     useEffect(()=>{
@@ -54,13 +91,34 @@ export default function Body(){
                 setQtd(new Array(response.data.length).fill(0));
                 setEnableAdd(new Array(response.data.length).fill(true));
                 setEnableRemove(new Array(response.data.length).fill(false));
+                if(cart.length> 0){
+                    console.log(cart);
+                    cart.map((item) => {
+                        const arrQtd = new Array(response.data.length).fill(0);
+                        const arrAdd = new Array(response.data.length).fill(true);
+                        const arrRemove = new Array(response.data.length).fill(false);
+                        if(item.quantity > 0){
+                            arrQtd[item.index]= item.quantity;
+                            arrRemove[item.index]= true;
+                            setEnableRemove([...arrRemove]);
+                            if(item.quantity === response.data.quantity){
+                                arrAdd[item.index] = false;
+                                setEnableRemove([...arrAdd]);
+                            }
+                        }else{
+                            arrQtd[item.index]= '0';
+                        }
+                        setQtd([...arrQtd]);
+                        return true;
+                    })
+                }
             }catch(error){
                 alert(error);
             }
         }
         listItens();
     },[]);
-    console.log(itens);
+
     return(
         <BodyDiv>
             {(itens.map((item, index)=>{
@@ -79,7 +137,7 @@ export default function Body(){
                                     color = {!color} 
                                     enable={enableRemove[index]} 
                                     disabled={!enableRemove[index]}
-                                    onClick={()=> removeCart(index)}>
+                                    onClick={()=> removeCart(index, name, value, image)}>
                                     -
                                 </ButtonItem>
                                 <h2>
@@ -89,7 +147,7 @@ export default function Body(){
                                     color ={color} 
                                     enable={enableAdd[index]} 
                                     disabled={!enableAdd[index]} 
-                                    onClick={()=>addCart(index,quantity)}>
+                                    onClick={()=>addCart(index, quantity, name, value, image)}>
                                     +
                                 </ButtonItem>
                             </CartDiv>
