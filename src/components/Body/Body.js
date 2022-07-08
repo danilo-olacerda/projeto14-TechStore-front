@@ -115,7 +115,7 @@ export default function Body(){
                     })
                 }
             }catch(error){
-                alert(error);
+                //alert(error);
             }
         }
         listItens();
