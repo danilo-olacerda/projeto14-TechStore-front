@@ -2,8 +2,9 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 import CartItem from "./CartItem.js";
 import Header from "../Header/Header.js";
+import Footer from "../Footer/Footer.js";
 
-export default function Cart(){
+export default function Cart() {
 
     let cartItems = sessionStorage.getItem('cart');
     cartItems = JSON.parse(cartItems);
@@ -11,47 +12,46 @@ export default function Cart(){
     const [cart, setCart] = useState([]);
     const [totalValue, setTotalValue] = useState(calcTotalValue());
 
-    useEffect(()=>{
-        if (cartItems){
+    useEffect(() => {
+        if (cartItems) {
             setCart(cartItems);
         }
-    },[])
-    
-    async function finalize(){
-        if(totalValue!==0){
+    }, [])
+
+    async function finalize() {
+        if (totalValue !== 0) {
             console.log("Checkout");
             return;
         }
         alert("Adicione pelo menos um item ao carrinho!");
     }
 
-    function calcTotalValue(){
+    function calcTotalValue() {
 
         cartItems = sessionStorage.getItem('cart');
-        if (cartItems===null)
-        return;
+        if (cartItems === null)
+            return;
         let total = 0;
         cartItems = JSON.parse(cartItems);
-    
-        for (let i = 0; i<cartItems.length; i++){
-            total+=(cartItems[i].value*cartItems[i].quantity);
+
+        for (let i = 0; i < cartItems.length; i++) {
+            total += (cartItems[i].value * cartItems[i].quantity);
         }
         return total;
     }
 
-    return(
+    return (
         <>
-        <Header cart={cart}/>
+            <Header cart={cart} />
             <Container>
-                <Line/>
                 <PageTitle>
                     Carrinho
                 </PageTitle>
-                <Line/>
+                <Line />
                 <CartContainer>
                     <p>Resumo da compra</p>
                     <CartItems>
-                        {cart.length!==0 ? cart.map((e, i)=> <CartItem setTotalValue={setTotalValue} calcTotalValue={calcTotalValue} value={e.value} itemQuantity={e.quantity} name={e.name} key={i} index={i} cart={cart} image={e.image} setCart={setCart}/>): "Você ainda não tem itens no carrinho!"}
+                        {cart.length !== 0 ? cart.map((e, i) => <CartItem setTotalValue={setTotalValue} calcTotalValue={calcTotalValue} value={e.value} itemQuantity={e.quantity} name={e.name} key={i} index={i} cart={cart} image={e.image} setCart={setCart} />) : "Você ainda não tem itens no carrinho!"}
                     </CartItems>
                     <span>
                         <div>
@@ -63,24 +63,22 @@ export default function Cart(){
                         </button>
                     </span>
                 </CartContainer>
-                <Line/>
-                Footer
             </Container>
+            <Footer />
         </>
     )
 };
 
 const Container = styled.div`
-    height: 100%;
+    margin-top: 100px;
+    height: calc(100% - 100px);
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
 `;
 const PageTitle = styled.h4`
-    margin-bottom: 23px;
     font-weight: 400;
-    font-size: 40px;
+    font-size: 20px;
     line-height: 48px;
     color: #000000;
 `;
@@ -91,7 +89,7 @@ const Line = styled.div`
     margin-bottom: 23px;
 `;
 const CartContainer = styled.div`
-    height: 100%;
+    height: 300px;
     width: calc(100% - 50px);
     display: flex;
     flex-direction: column;
@@ -137,4 +135,4 @@ const CartItems = styled.div`
     display: flex;
     flex-direction: column;
     border-radius: 8px;
-`
+`;
