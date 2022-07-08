@@ -10,7 +10,7 @@ export default function Body(){
     const[qtd, setQtd]= useState([]);
     const[enableAdd, setEnableAdd]=useState([]);
     const[enableRemove, setEnableRemove]= useState([]);
-    const [cart, setCart]= useState(JSON.parse(sessionStorage.getItem("cart")|| "[]"));
+    const[cart, setCart]= useState(JSON.parse(sessionStorage.getItem("cart")|| "[]"));
 
     function refreshCart(index, name, value, image, method){
         const cartStorage = cart;
@@ -22,7 +22,7 @@ export default function Body(){
             image: image,
             quantity: qtd[index]
         };
-        const findIndex = cartStorage.find( item => item.index === newCart.index);
+        const findIndex = cartStorage.find(item => item.index === newCart.index);
         if(method){
             if(findIndex){
                 cartStorage.pop(findIndex);
@@ -34,7 +34,7 @@ export default function Body(){
             sessionStorage.setItem("cart",JSON.stringify(cartStorage));
 
         }else{
-            if(newCart.quantity>1){
+            if(newCart.quantity>0){
                 cartStorage.pop(findIndex);
                 cartStorage.push(newCart);
             }else{

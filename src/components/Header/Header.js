@@ -10,6 +10,7 @@ export default function Header ({cart}){
 
     useEffect(()=>{
         let sum = 0;
+        console.log(cart);
         cart.map((item)=>{
             if(item.quantity >0){
                 sum += item.quantity;
