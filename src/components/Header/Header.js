@@ -1,16 +1,24 @@
 import { useContext, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
+import axios from "axios";
 import styled from "styled-components";
 import UserContext from "../../contexts/UserContext";
 
 export default function Header ({cart}){
+    const navigate = useNavigate();
     const {token} = useContext(UserContext);
     const[isLogged, setIsLogged]= useState(false);
-    const[CartValue, setCartValue]= useState(0);;
+    const[CartValue, setCartValue]= useState(0);
+    const[newUser, setNewUser]= useState('');
+    
+    const config ={
+        headers:{
+            Authorization: `Bearer ${token.token}`
+        }
+    };
 
     useEffect(()=>{
         let sum = 0;
-        console.log(cart);
         cart.map((item)=>{
             if(item.quantity >0){
                 sum += item.quantity;
@@ -20,10 +28,35 @@ export default function Header ({cart}){
         setCartValue(sum);
     },[cart]);
 
-    // useEffect(()=>{
+    useEffect(()=>{
+        const logged = async ()=>{
+            try{
+                if(token){
+                    const response = await axios.get("http://localhost:5000/session",config);
+                    console.log(response);
+                    console.log(config);
+                    if((response).data.name){
+                    setIsLogged(true);
+                    setNewUser((response).data.name);
+                    }
+                }
+            }catch(error){
+                alert(error);
+            }
+        }
+        logged();
+    },[]);
 
-
-    // },[]);
+    async function exitUser(){
+        try{
+            await axios.delete("http://localhost:5000/session",config);
+            setNewUser('');
+            setIsLogged(false);
+            navigate("/");
+        }catch(error){
+            alert(error);
+        }
+    }
 
     return(
         <>
@@ -32,6 +65,20 @@ export default function Header ({cart}){
                     <h1>
                         TechStore
                     </h1>
+                    <h2>
+                        {newUser}
+                    </h2>
+                    <Link to = {"/cart"} style ={{textDecoration:'none'}}>
+                            <CartDiv>
+                                <ion-icon name="cart-outline"></ion-icon>
+                                <CartNumber>
+                                    {CartValue}
+                                </CartNumber>
+                            </CartDiv>
+                        </Link>
+                        <Link to ={"/"} style ={{textDecoration:'none'}} onClick = {()=> exitUser()}>
+                            <ion-icon name="exit-outline"></ion-icon>
+                        </Link> 
                 </HeaderDiv>
                 :
                 <HeaderDiv>
@@ -51,8 +98,7 @@ export default function Header ({cart}){
                         </Link>
                         <Link to ={"/login"} style ={{textDecoration:'none'}}>
                             <ion-icon name="people-sharp"></ion-icon>
-                        </Link>
-                        
+                        </Link>    
                 </HeaderDiv>
             }
         </>
@@ -79,6 +125,9 @@ export const HeaderDiv = styled.div`
         font-style: normal;
         font-size: 30px;
         margin-right: 30px;
+    }
+    h2{
+        font-size: 20px;
     }
     ion-icon{
         width: 50px;
