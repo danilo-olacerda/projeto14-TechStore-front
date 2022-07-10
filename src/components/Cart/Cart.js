@@ -15,6 +15,7 @@ export default function Cart() {
 
     const [cart, setCart] = useState([]);
     const [totalValue, setTotalValue] = useState(calcTotalValue());
+    const [atualizeToken, setAtualizeToken] = useState();
     const navigate=useNavigate();
     const { token } = useContext(UserContext);
 
@@ -25,10 +26,15 @@ export default function Cart() {
 
     }, [])
 
+    useEffect(()=>{
+
+        token = useContext(UserContext);
+
+    },[atualizeToken])
+
     async function finalize() {
 
-        token  = useContext(UserContext);
-        
+        setAtualizeToken(Math.random);
         if (totalValue !== 0 && token) {
 
             let body = sessionStorage.getItem('cart');
