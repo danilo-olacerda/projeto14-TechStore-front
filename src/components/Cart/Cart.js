@@ -6,7 +6,6 @@ import Header from "../Header/Header.js";
 import Footer from "../Footer/Footer.js";
 import {useContext} from "react";
 import UserContext from "../../contexts/UserContext.js";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function Cart() {
