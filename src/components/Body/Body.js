@@ -91,7 +91,7 @@ export default function Body(){
     useEffect(()=>{
         const listItens = async ()=>{
             try{
-                const response = await axios.get("http://localhost:5000/inventory");
+                const response = await axios.get("http://techstore-back.herokuapp.com/inventory");
                 setItens(response.data);
                 setQtd(new Array(response.data.length).fill(0));
                 setEnableAdd(new Array(response.data.length).fill(true));
