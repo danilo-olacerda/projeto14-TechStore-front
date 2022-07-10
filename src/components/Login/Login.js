@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import {useContext} from "react";
@@ -32,7 +32,9 @@ export default function Login(){
 
     return(
         <Container>
-            <h1>TechStore</h1>
+            <Link to ={"/"} style ={{textDecoration:'none'}}>
+                <h1>TechStore</h1>
+            </Link>
             <form action="submit" onSubmit={login}>
                 <input type="email" placeholder="E-mail" required value={email} onChange={(e)=> setEmail(e.target.value)} />
                 <input type="password" placeholder="Senha" required value={password} onChange={(e)=> setPassword(e.target.value)} />
@@ -65,6 +67,7 @@ const Container = styled.div`
         font-style: normal;
         font-size: 40px;
         margin-bottom: 15px;
+        color: #000000;
     }
     input {
         border: none;

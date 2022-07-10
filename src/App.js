@@ -5,6 +5,7 @@ import Register from "./components/Register/Register.js";
 import Login from "./components/Login/Login.js";
 import Body from "./components/Body/Body.js";
 import Cart from "./components/Cart/Cart.js";
+import Sucess from "./components/Sucess/Sucess";
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path = "/" element ={<Body/>}/>
           <Route path = "/cart" element ={<Cart/>}/>
+          <Route path = "/sucess" element ={<Sucess/>}/>
         </Routes>
       </UserContext.Provider>
     </BrowserRouter>

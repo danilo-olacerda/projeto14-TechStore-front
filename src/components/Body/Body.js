@@ -3,9 +3,12 @@ import styled from "styled-components";
 import axios from "axios";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
+import { Container, Line, PageTitle} from "../Cart/Cart";
+import { RelativeBody } from "../Sucess/Sucess";
 
 export default function Body(){
     const color = true;
+    const unidades = "und(s)";
     const[itens, setItens]= useState([]);
     const[qtd, setQtd]= useState([]);
     const[enableAdd, setEnableAdd]=useState([]);
@@ -94,7 +97,6 @@ export default function Body(){
                 setEnableAdd(new Array(response.data.length).fill(true));
                 setEnableRemove(new Array(response.data.length).fill(false));
                 if(cart.length> 0){
-                    console.log(cart);
                     cart.map((item) => {
                         const arrQtd = new Array(response.data.length).fill(0);
                         const arrAdd = new Array(response.data.length).fill(true);
@@ -124,44 +126,50 @@ export default function Body(){
     return(
         <>
             <Header cart ={cart}/>
-            <MainContainer>
-                <BodyDiv>
-                    {(itens.map((item, index)=>{
-                        const {quantity, value, name, image}= item;
-                        return(
-                            <>
-                                <ItemDiv key={index}>
-                                    <ImgDiv key={index}>
-                                        <img src={image} alt= "nao tem" />
-                                    </ImgDiv>
-                                    <h1>{name}</h1>
-                                    <h1>Qtd Disponivel:{quantity}</h1>
-                                    <h1>Valor:R${value}</h1>
-                                    <CartDiv>
-                                        <ButtonItem 
-                                            color = {!color} 
-                                            enable={enableRemove[index]} 
-                                            disabled={!enableRemove[index]}
-                                            onClick={()=> removeCart(index, name, value, image)}>
-                                            -
-                                        </ButtonItem>
-                                        <h2>
-                                            {qtd[index]}
-                                        </h2>
-                                        <ButtonItem 
-                                            color ={color} 
-                                            enable={enableAdd[index]} 
-                                            disabled={!enableAdd[index]} 
-                                            onClick={()=>addCart(index, quantity, name, value, image)}>
-                                            +
-                                        </ButtonItem>
-                                    </CartDiv>
-                                </ItemDiv>
-                            </>
-                        );
-                    }))}
-                </BodyDiv>
-            </MainContainer>
+            <Container>
+                <PageTitle>
+                    Página Principal
+                </PageTitle>
+                <Line/>
+                <RelativeBody>
+                    <BodyDiv>
+                        {(itens.map((item, index)=>{
+                            const {quantity, value, name, image}= item;
+                            return(
+                                <>
+                                    <ItemDiv key={index}>
+                                        <ImgDiv key={index}>
+                                            <img src={image} alt= "nao tem" />
+                                        </ImgDiv>
+                                        <h1>{name}</h1>
+                                        <h1>Disponivel:{quantity}{unidades}</h1>
+                                        <h1>Valor:R${value}</h1>
+                                        <CartDiv>
+                                            <ButtonItem 
+                                                color = {!color} 
+                                                enable={enableRemove[index]} 
+                                                disabled={!enableRemove[index]}
+                                                onClick={()=> removeCart(index, name, value, image)}>
+                                                -
+                                            </ButtonItem>
+                                            <h2>
+                                                {qtd[index]}
+                                            </h2>
+                                            <ButtonItem 
+                                                color ={color} 
+                                                enable={enableAdd[index]} 
+                                                disabled={!enableAdd[index]} 
+                                                onClick={()=>addCart(index, quantity, name, value, image)}>
+                                                +
+                                            </ButtonItem>
+                                        </CartDiv>
+                                    </ItemDiv>
+                                </>
+                            );
+                        }))}
+                    </BodyDiv>
+                </RelativeBody>
+            </Container>
             <Footer/>
             </>
     );
@@ -173,28 +181,34 @@ const MainContainer = styled.div`
     overflow-y: hidden;
 `;
 
-const BodyDiv = styled.div `
+export const BodyDiv = styled.div `
     box-sizing: border-box;
-    height: 60vh;
-    width: 80%;
+    height: 100%;
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
+    align-items: flex-start;
+    justify-content: center;
     overflow-y: scroll;
-    justify-content: space-between;
-    margin-top: 130px;
-    margin-left: 11%;
+    margin-top: 0;
     border: 1px solid black;
     background-color: rgb(0,0,0,0);
+    border-radius: 8px;
 `;
-const ItemDiv = styled.div`
-    height: 90px;
-    width: 120px;
+export const ItemDiv = styled.div`
+    box-sizing: border-box;
+    padding: 5px;
+    height: auto;
+    width: 145px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
-    margin-bottom: 40px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    border-radius: 10px;
+    border: 1px solid ;
     h1{
 
     }
@@ -215,22 +229,26 @@ const ButtonItem = styled.button`
     border: none;
     height: 20px;
     width: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: ${props => props.enable? props.color ? 'green': '#F00000': 'grey'};
     color: black;
+    border-radius: 5px;
     h3{
             
     }
 `;
 
-const ImgDiv = styled.div`
+export const ImgDiv = styled.div`
     height: 43px;
     width: 43px;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-start;
+    justify-content: flex-start;
     border-radius: 10px;
     border: 1px solid ;
-    margin-left: 30px;
+    margin-left: 0px;
     img{
         height: 40px;
         width: 40px;

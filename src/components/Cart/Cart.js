@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import CartItem from "./CartItem.js";
 import Header from "../Header/Header.js";
 import Footer from "../Footer/Footer.js";
@@ -11,6 +12,7 @@ export default function Cart() {
 
     const [cart, setCart] = useState([]);
     const [totalValue, setTotalValue] = useState(calcTotalValue());
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (cartItems) {
@@ -21,6 +23,8 @@ export default function Cart() {
     async function finalize() {
         if (totalValue !== 0) {
             console.log("Checkout");
+            const sucess = {cart:cart, total: totalValue};
+            navigate("/sucess", {state:sucess});
             return;
         }
         alert("Adicione pelo menos um item ao carrinho!");
@@ -69,20 +73,20 @@ export default function Cart() {
     )
 };
 
-const Container = styled.div`
+export const Container = styled.div`
     margin-top: 100px;
     height: calc(100% - 100px);
     display: flex;
     flex-direction: column;
     align-items: center;
 `;
-const PageTitle = styled.h4`
+export const PageTitle = styled.h4`
     font-weight: 400;
     font-size: 20px;
     line-height: 48px;
     color: #000000;
 `;
-const Line = styled.div`
+export const Line = styled.div`
     width: 100%;
     height: 1px;
     background-color: gray;
