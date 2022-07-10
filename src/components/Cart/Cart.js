@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import CartItem from "./CartItem.js";
 import Header from "../Header/Header.js";
 import Footer from "../Footer/Footer.js";
@@ -15,8 +16,12 @@ export default function Cart() {
 
     const [cart, setCart] = useState([]);
     const [totalValue, setTotalValue] = useState(calcTotalValue());
+<<<<<<< HEAD
     const navigate=useNavigate();
     const { token } = useContext(UserContext);
+=======
+    const navigate = useNavigate();
+>>>>>>> 0f1079ba32f330701e775855085efd35bbb85c33
 
     useEffect(() => {
         if (cartItems) {
@@ -25,6 +30,7 @@ export default function Cart() {
     }, [])
 
     async function finalize() {
+<<<<<<< HEAD
         if (totalValue !== 0 && token) {
 
             let body = sessionStorage.getItem('cart');
@@ -43,6 +49,12 @@ export default function Cart() {
                 console.log(res.response.data);
             });
 
+=======
+        if (totalValue !== 0) {
+            console.log("Checkout");
+            const sucess = {cart:cart, total: totalValue};
+            navigate("/sucess", {state:sucess});
+>>>>>>> 0f1079ba32f330701e775855085efd35bbb85c33
             return;
         }
         if (totalValue === 0) {
@@ -97,20 +109,20 @@ export default function Cart() {
     )
 };
 
-const Container = styled.div`
+export const Container = styled.div`
     margin-top: 100px;
     height: calc(100% - 100px);
     display: flex;
     flex-direction: column;
     align-items: center;
 `;
-const PageTitle = styled.h4`
+export const PageTitle = styled.h4`
     font-weight: 400;
     font-size: 20px;
     line-height: 48px;
     color: #000000;
 `;
-const Line = styled.div`
+export const Line = styled.div`
     width: 100%;
     height: 1px;
     background-color: gray;

@@ -33,8 +33,6 @@ export default function Header ({cart}){
             try{
                 if(token){
                     const response = await axios.get("http://localhost:5000/session",config);
-                    console.log(response);
-                    console.log(config);
                     if((response).data.name){
                     setIsLogged(true);
                     setNewUser((response).data.name);
@@ -62,9 +60,11 @@ export default function Header ({cart}){
         <>
             {(isLogged)?
                 <HeaderDiv>
-                    <h1>
-                        TechStore
-                    </h1>
+                    <Link to ={"/"} style ={{textDecoration:'none'}}>
+                        <h1>
+                            TechStore
+                        </h1>
+                    </Link>
                     <h2>
                         {newUser}
                     </h2>
@@ -82,9 +82,11 @@ export default function Header ({cart}){
                 </HeaderDiv>
                 :
                 <HeaderDiv>
-                    <h1>
-                        Techstore
-                    </h1>
+                    <Link to ={"/"} style ={{textDecoration:'none'}}>
+                        <h1>
+                            Techstore
+                        </h1>
+                    </Link>
                         <Link to = {"/cart"} style ={{textDecoration:'none'}}>
                             <CartDiv>
                                 <ion-icon name="cart-outline"></ion-icon>
@@ -125,6 +127,7 @@ export const HeaderDiv = styled.div`
         font-style: normal;
         font-size: 30px;
         margin-right: 30px;
+        color: #000000;
     }
     h2{
         font-size: 20px;
@@ -143,8 +146,7 @@ export const CartDiv = styled.div `
     justify-content: center;
     width: 50px;
     height: 50px;
-    position: relative;
-    
+    position: relative;   
 `;
 
 export const CartNumber = styled.div`
