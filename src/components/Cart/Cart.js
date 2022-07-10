@@ -16,12 +16,8 @@ export default function Cart() {
 
     const [cart, setCart] = useState([]);
     const [totalValue, setTotalValue] = useState(calcTotalValue());
-<<<<<<< HEAD
     const navigate=useNavigate();
     const { token } = useContext(UserContext);
-=======
-    const navigate = useNavigate();
->>>>>>> 0f1079ba32f330701e775855085efd35bbb85c33
 
     useEffect(() => {
         if (cartItems) {
@@ -30,7 +26,6 @@ export default function Cart() {
     }, [])
 
     async function finalize() {
-<<<<<<< HEAD
         if (totalValue !== 0 && token) {
 
             let body = sessionStorage.getItem('cart');
@@ -43,18 +38,13 @@ export default function Cart() {
             const promise = axios.post("http://localhost:5000/buy", body, config);
 
             promise.then(()=>{
-                navigate("/checkout");
+                const sucess = {cart:cart, total: totalValue};
+                navigate("/sucess", {state:sucess});
             })
             .catch((res)=>{
                 console.log(res.response.data);
             });
 
-=======
-        if (totalValue !== 0) {
-            console.log("Checkout");
-            const sucess = {cart:cart, total: totalValue};
-            navigate("/sucess", {state:sucess});
->>>>>>> 0f1079ba32f330701e775855085efd35bbb85c33
             return;
         }
         if (totalValue === 0) {
