@@ -15,7 +15,6 @@ export default function Cart() {
 
     const [cart, setCart] = useState([]);
     const [totalValue, setTotalValue] = useState(calcTotalValue());
-    const [atualizeToken, setAtualizeToken] = useState();
     const navigate=useNavigate();
     const { token } = useContext(UserContext);
 
@@ -23,25 +22,17 @@ export default function Cart() {
         if (cartItems) {
             setCart(cartItems);
         }
-
     }, [])
-
-    useEffect(()=>{
-
-        token = useContext(UserContext);
-
-    },[atualizeToken])
 
     async function finalize() {
 
-        setAtualizeToken(Math.random);
         if (totalValue !== 0 && token) {
 
             let body = sessionStorage.getItem('cart');
             body = JSON.parse(body);
             const config = {
                 headers: {
-                    "Authorization": `Bearer ${token}`
+                    "Authorization": `Bearer ${token.token}`
                 }
             };
             const promise = axios.post("https://techstore-back.herokuapp.com/buy", body, config);
@@ -60,8 +51,8 @@ export default function Cart() {
             alert("Adicione pelo menos um item ao carrinho!");
             return;
         }
-        alert("Faça login para continuar!");
-        navigate("/login");        
+        
+        console.log(token);
 
     }
 
