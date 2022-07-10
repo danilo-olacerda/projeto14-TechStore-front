@@ -8,7 +8,7 @@ import Cart from "./components/Cart/Cart.js";
 
 function App() {
 
-  const [token, setToken] = useState();
+  const [token, setToken] = useState('');
 
   return (
     <BrowserRouter>
