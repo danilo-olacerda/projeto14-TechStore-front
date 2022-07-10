@@ -52,6 +52,9 @@ export default function Cart() {
             alert("Adicione pelo menos um item ao carrinho!");
             return;
         }
+
+        alert("Faça login para continuar!");
+        navigate("/login");    
     }
 
     function calcTotalValue() {
