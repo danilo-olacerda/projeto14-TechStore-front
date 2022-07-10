@@ -3,6 +3,10 @@ import { useState, useEffect } from "react";
 import CartItem from "./CartItem.js";
 import Header from "../Header/Header.js";
 import Footer from "../Footer/Footer.js";
+import {useContext} from "react";
+import UserContext from "../../contexts/UserContext.js";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function Cart() {
 
@@ -11,6 +15,8 @@ export default function Cart() {
 
     const [cart, setCart] = useState([]);
     const [totalValue, setTotalValue] = useState(calcTotalValue());
+    const navigate=useNavigate();
+    const { token } = useContext(UserContext);
 
     useEffect(() => {
         if (cartItems) {
@@ -19,11 +25,33 @@ export default function Cart() {
     }, [])
 
     async function finalize() {
-        if (totalValue !== 0) {
-            console.log("Checkout");
+        if (totalValue !== 0 && token) {
+
+            let body = sessionStorage.getItem('cart');
+            body = JSON.parse(body);
+            const config = {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            }
+            const promise = axios.post("http://localhost:5000/buy", body, config);
+
+            promise.then(()=>{
+                navigate("/checkout");
+            })
+            .catch((res)=>{
+                console.log(res.response.data);
+            });
+
             return;
         }
-        alert("Adicione pelo menos um item ao carrinho!");
+        if (totalValue === 0) {
+            alert("Adicione pelo menos um item ao carrinho!");
+            return;
+        }
+        alert("Faça login para continuar!");
+        navigate("/login");        
+
     }
 
     function calcTotalValue() {

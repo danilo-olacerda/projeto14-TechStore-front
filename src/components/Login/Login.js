@@ -23,7 +23,7 @@ export default function Login(){
 
         promise.then((res)=>{
             setToken(res.data);
-            navigate("/");
+            navigate("/cart");
         })
         .catch((res)=>{
             alert(res.response.data);
