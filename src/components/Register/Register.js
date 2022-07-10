@@ -30,7 +30,7 @@ export default function Register() {
             return;
         };
 
-        await axios.post("http://techstore-back.herokuapp.com/register", body);
+        await axios.post("https://techstore-back.herokuapp.com/register", body);
         navigate("/");
     }
 

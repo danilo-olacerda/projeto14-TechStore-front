@@ -32,7 +32,7 @@ export default function Header ({cart}){
         const logged = async ()=>{
             try{
                 if(token){
-                    const response = await axios.get("http://techstore-back.herokuapp.com/session",config);
+                    const response = await axios.get("https://techstore-back.herokuapp.com/session",config);
                     if((response).data.name){
                     setIsLogged(true);
                     setNewUser((response).data.name);
@@ -47,7 +47,7 @@ export default function Header ({cart}){
 
     async function exitUser(){
         try{
-            await axios.delete("http://techstore-back.herokuapp.com/session",config);
+            await axios.delete("https://techstore-back.herokuapp.com/session",config);
             setNewUser('');
             setIsLogged(false);
             navigate("/");

@@ -34,7 +34,7 @@ export default function Cart() {
                     "Authorization": `Bearer ${token}`
                 }
             };
-            const promise = axios.post("http://techstore-back.herokuapp.com/buy", body, config);
+            const promise = axios.post("https://techstore-back.herokuapp.com/buy", body, config);
 
             promise.then(()=>{
                 const sucess = {cart:cart, total: totalValue};

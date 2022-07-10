@@ -19,7 +19,7 @@ export default function Login(){
             email,
             password
         }
-        const promise = axios.post("http://techstore-back.herokuapp.com/login", body);
+        const promise = axios.post("https://techstore-back.herokuapp.com/login", body);
 
         promise.then((res)=>{
             setToken(res.data);
