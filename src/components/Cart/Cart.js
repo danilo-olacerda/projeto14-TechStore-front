@@ -22,9 +22,13 @@ export default function Cart() {
         if (cartItems) {
             setCart(cartItems);
         }
+
     }, [])
 
     async function finalize() {
+
+        token  = useContext(UserContext);
+        
         if (totalValue !== 0 && token) {
 
             let body = sessionStorage.getItem('cart');
