@@ -33,7 +33,7 @@ export default function Cart() {
                 headers: {
                     "Authorization": `Bearer ${token}`
                 }
-            }
+            };
             const promise = axios.post("http://techstore-back.herokuapp.com/buy", body, config);
 
             promise.then(()=>{
