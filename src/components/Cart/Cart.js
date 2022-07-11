@@ -31,6 +31,12 @@ export default function Cart() {
 
             let body = sessionStorage.getItem('cart');
             body = JSON.parse(body);
+
+            if (typeof(token) !== 'object'){
+                token = {
+                    token
+                }
+            }
             const config = {
                 headers: {
                     "Authorization": `Bearer ${token.token}`
