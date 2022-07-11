@@ -108,8 +108,10 @@ export const Container = styled.div`
     align-items: center;
 `;
 export const PageTitle = styled.h4`
-    font-weight: 400;
-    font-size: 20px;
+    font-family: 'Raleway', sans-serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 35px;
     line-height: 48px;
     color: #000000;
 `;
