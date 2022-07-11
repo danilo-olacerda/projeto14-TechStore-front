@@ -26,7 +26,11 @@ export default function Cart() {
 
     async function finalize() {
 
-        console.log(token);
+        if (totalValue === 0) {
+            alert("Adicione pelo menos um item ao carrinho!");
+            return;
+        }
+        
         if (totalValue !== 0 && token) {
 
             let body = sessionStorage.getItem('cart');
@@ -52,10 +56,6 @@ export default function Cart() {
                 console.log(res.response.data);
             });
 
-            return;
-        }
-        if (totalValue === 0) {
-            alert("Adicione pelo menos um item ao carrinho!");
             return;
         }
 
