@@ -6,6 +6,7 @@ import Login from "./components/Login/Login.js";
 import Body from "./components/Body/Body.js";
 import Cart from "./components/Cart/Cart.js";
 import Sucess from "./components/Sucess/Sucess";
+import UserMenu from "./components/UserMenu/UserMenu.js";
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
           <Route path = "/" element ={<Body/>}/>
           <Route path = "/cart" element ={<Cart/>}/>
           <Route path = "/sucess" element ={<Sucess/>}/>
+          <Route path = "/usermenu" element ={<UserMenu />}/>
         </Routes>
       </UserContext.Provider>
     </BrowserRouter>

@@ -65,7 +65,7 @@ export default function Header ({cart}){
                             TechStore
                         </h1>
                     </Link>
-                    <h2>
+                    <h2 onClick={()=> navigate("/usermenu")}>
                         {newUser}
                     </h2>
                     <Link to = {"/cart"} style ={{textDecoration:'none'}}>
