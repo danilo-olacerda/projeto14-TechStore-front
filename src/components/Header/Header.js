@@ -130,6 +130,9 @@ export const HeaderDiv = styled.div`
         color: #000000;
     }
     h2{
+        font-family: 'Roboto', sans-serif;
+        font-style: bold;
+        font-weight: 700;
         font-size: 20px;
     }
     ion-icon{
@@ -150,14 +153,17 @@ export const CartDiv = styled.div `
 `;
 
 export const CartNumber = styled.div`
+    box-sizing: content-box;
+    padding: 1px;
     position: absolute;
     display: flex;
     justify-content: center;
     align-items: center;
     top: 3px;
     right: 0;
-    width: 12px;
-    height: 12px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
     background-color: red;
     color: white;
 `;

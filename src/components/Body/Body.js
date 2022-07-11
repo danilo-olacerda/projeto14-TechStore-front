@@ -134,7 +134,7 @@ export default function Body(){
                 <RelativeBody>
                     <BodyDiv>
                         {(itens.map((item, index)=>{
-                            const {quantity, value, name, image}= item;
+                            const {quantity, value, name, image, description}= item;
                             return(
                                 <>
                                     <ItemDiv key={index}>
@@ -143,7 +143,8 @@ export default function Body(){
                                         </ImgDiv>
                                         <h1>{name}</h1>
                                         <h1>Disponivel:{quantity}{unidades}</h1>
-                                        <h1>Valor:R${value}</h1>
+                                        <h1>Valor:R${value.toFixed(2).replace(".",",")}</h1>
+                                        <h1>Descrição:{description}</h1>
                                         <CartDiv>
                                             <ButtonItem 
                                                 color = {!color} 
@@ -199,28 +200,35 @@ export const ItemDiv = styled.div`
     box-sizing: border-box;
     padding: 5px;
     height: auto;
-    width: 145px;
+    width: 150px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    margin-right: 10px;
+    flex-wrap: wrap;
+    margin: 10px 5px;
     border-radius: 10px;
     border: 1px solid ;
     h1{
-
+        font-family: 'Raleway', sans-serif;
+        font-style: italic;
+        font-weight: 300;
+        font-size: 12px;
+        line-height: 16px;
+        color: #000000;
+        word-break: break-word;
     }
 `;
 
 const CartDiv = styled.div`
+    box-sizing: border-box;
     width: 100%;
-    height: 20px;
+    height: auto;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    padding: 5px 0px;
     h2{
 
     }
@@ -236,7 +244,7 @@ const ButtonItem = styled.button`
     color: black;
     border-radius: 5px;
     h3{
-            
+        
     }
 `;
 
@@ -249,6 +257,7 @@ export const ImgDiv = styled.div`
     border-radius: 10px;
     border: 1px solid ;
     margin-left: 0px;
+    margin-bottom: 5px;
     img{
         height: 40px;
         width: 40px;

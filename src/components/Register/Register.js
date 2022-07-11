@@ -78,9 +78,10 @@ const Container = styled.div`
         color: #000000;
     }
     input {
-        border: none;
+        border: 1px solid black;
+        border-radius: 8px;
         margin-bottom: 10px;
-        background: #E8E5E2;
+        background: #FFFFFF;
         border-radius: 5px;
         height: 58px;
         padding-top: 18px;
@@ -93,19 +94,16 @@ const Container = styled.div`
         outline: none;
     }
     button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    background: #E8E5E2;
-    border-radius: 5px;
-    height: 46px;
-        h3 {
-        font-weight: 600;
-        font-size: 20px;
-        line-height: 23px;
-        color: #000000;
-        }
+        font-weight: 400;
+        font-size: 24px;
+        line-height: 29px;
+        color: #FFFFFF;
+        width: 100%;
+        background: #0000FF;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        border: none;
+        border-radius: 5px;
+        padding: 10px;
     }
     p {
         font-weight: 600;
