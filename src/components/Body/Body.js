@@ -27,9 +27,9 @@ export default function Body(){
         };
         const findIndex = cartStorage.find(item => item.index === newCart.index);
         if(method){
+            const findId = cartStorage.findIndex(item => item.index === index);
             if(findIndex){
-                cartStorage.splice(findIndex,1);
-                cartStorage.push(newCart);
+                cartStorage[findId].quantity = qtd[index]; 
             }else{
                 cartStorage.push(newCart);
             }
@@ -37,11 +37,11 @@ export default function Body(){
             sessionStorage.setItem("cart",JSON.stringify(cartStorage));
 
         }else{
-            if(newCart.quantity>0){
-                cartStorage.splice(findIndex,1);
-                cartStorage.push(newCart);
+            const findId = cartStorage.findIndex(item => item.index === newCart.index);
+            if(newCart.quantity>0&& findIndex){
+                cartStorage[findId].quantity = qtd[newCart.index]; 
             }else{
-                cartStorage.splice(findIndex,1);
+                cartStorage.splice(findId,1);
             }
             setCart([...cartStorage]);
             sessionStorage.setItem("cart",JSON.stringify(cartStorage));
@@ -97,10 +97,10 @@ export default function Body(){
                 setEnableAdd(new Array(response.data.length).fill(true));
                 setEnableRemove(new Array(response.data.length).fill(false));
                 if(cart.length> 0){
-                    cart.map((item) => {
                         const arrQtd = new Array(response.data.length).fill(0);
                         const arrAdd = new Array(response.data.length).fill(true);
                         const arrRemove = new Array(response.data.length).fill(false);
+                    cart.map((item) => {
                         if(item.quantity > 0){
                             arrQtd[item.index]= item.quantity;
                             arrRemove[item.index]= true;
@@ -136,35 +136,34 @@ export default function Body(){
                         {(itens.map((item, index)=>{
                             const {quantity, value, name, image}= item;
                             return(
-                                <>
-                                    <ItemDiv key={index}>
-                                        <ImgDiv key={index}>
-                                            <img src={image} alt= "nao tem" />
-                                        </ImgDiv>
-                                        <h1>{name}</h1>
-                                        <h1>Disponivel:{quantity}{unidades}</h1>
-                                        <h1>Valor:R${value}</h1>
-                                        <CartDiv>
-                                            <ButtonItem 
-                                                color = {!color} 
-                                                enable={enableRemove[index]} 
-                                                disabled={!enableRemove[index]}
-                                                onClick={()=> removeCart(index, name, value, image)}>
-                                                -
-                                            </ButtonItem>
-                                            <h2>
-                                                {qtd[index]}
-                                            </h2>
-                                            <ButtonItem 
-                                                color ={color} 
-                                                enable={enableAdd[index]} 
-                                                disabled={!enableAdd[index]} 
-                                                onClick={()=>addCart(index, quantity, name, value, image)}>
-                                                +
-                                            </ButtonItem>
-                                        </CartDiv>
-                                    </ItemDiv>
-                                </>
+                                <ItemDiv key={index}>
+                                    <ImgDiv>
+                                        <img src={image} alt="nao tem" />
+                                    </ImgDiv>
+                                    <h1>{name}</h1>
+                                    <h1>Disponivel:{quantity}{unidades}</h1>
+                                    <h1>Valor:R${value}</h1>
+                                    <CartDiv>
+                                        <ButtonItem
+                                            alteration={!color}
+                                            enable={enableRemove[index]}
+                                            disabled={!enableRemove[index]}
+                                            onClick={() => removeCart(index, name, value, image)}>
+                                            -
+                                        </ButtonItem>
+                                        <h2>
+                                            {qtd[index]}
+                                        </h2>
+                                        <ButtonItem
+                                            alteration={color}
+                                            enable={enableAdd[index]}
+                                            disabled={!enableAdd[index]}
+                                            onClick={() => addCart(index, quantity, name, value, image)}>
+                                            +
+                                        </ButtonItem>
+                                    </CartDiv>
+                                </ItemDiv>
+
                             );
                         }))}
                     </BodyDiv>
@@ -175,11 +174,7 @@ export default function Body(){
     );
 }
 
-const MainContainer = styled.div`
-    max-height: 100vh;
-    max-width: 100vw;
-    overflow-y: hidden;
-`;
+
 
 export const BodyDiv = styled.div `
     box-sizing: border-box;
@@ -232,7 +227,7 @@ const ButtonItem = styled.button`
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: ${props => props.enable? props.color ? 'green': '#F00000': 'grey'};
+    background-color: ${props => props.enable? props.alteration ? 'green': '#F00000': 'grey'};
     color: black;
     border-radius: 5px;
     h3{
