@@ -132,7 +132,7 @@ export default function Body(){
                 </PageTitle>
                 <Line/>
                 <RelativeBody>
-                    <BodyDiv>
+                    <BodyDiv width={true}>
                         {(itens.map((item, index)=>{
                             const {quantity, value, name, image, description}= item;
                             return(
@@ -141,7 +141,7 @@ export default function Body(){
                                         <ImgDiv key={index}>
                                             <img src={image} alt= "nao tem" />
                                         </ImgDiv>
-                                        <h1>{name}</h1>
+                                        <h1>Nome:{name}</h1>
                                         <h1>Disponivel:{quantity}{unidades}</h1>
                                         <h1>Valor:R${value.toFixed(2).replace(".",",")}</h1>
                                         <h1>Descrição:{description}</h1>
@@ -184,7 +184,7 @@ const MainContainer = styled.div`
 
 export const BodyDiv = styled.div `
     box-sizing: border-box;
-    height: 100%;
+    height: ${props => props.width ? "100%" : "90%"};
     width: 100%;
     display: flex;
     flex-wrap: wrap;
@@ -192,9 +192,8 @@ export const BodyDiv = styled.div `
     justify-content: center;
     overflow-y: scroll;
     margin-top: 0;
-    border: 1px solid black;
     background-color: rgb(0,0,0,0);
-    border-radius: 8px;
+    padding-bottom: 50px;
 `;
 export const ItemDiv = styled.div`
     box-sizing: border-box;

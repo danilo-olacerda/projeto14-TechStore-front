@@ -24,7 +24,7 @@ export default function Sucess(){
                 </PageTitle>
                 <Line/>
                 <RelativeBody>
-                    <BodyDiv>
+                    <BodyDiv width ={false}>
                         {(sucess)?
                             sucess.cart.map((item, index)=>{
                                 const {quantity, value, name, image}= item;
@@ -33,7 +33,7 @@ export default function Sucess(){
                                         <ImgDiv key={index}>
                                             <img src={image} alt= "nao tem" />
                                         </ImgDiv>
-                                        <h1>{name}</h1>
+                                        <h1>Nome:{name}</h1>
                                         <h1>Valor:R${value}</h1>
                                         <h1> Quantidade:{quantity}</h1>
                                     </SucessItem>
@@ -43,7 +43,7 @@ export default function Sucess(){
                             <h2>Carrinho Estava Vazio</h2>
                         }
                         <TotalDiv>
-                            Total = R${sucess.total}
+                            Total = R${sucess? sucess.total.toFixed(2).replace(".",","):"0:00"}
                         </TotalDiv>
                     </BodyDiv>
                 </RelativeBody>
@@ -54,9 +54,12 @@ export default function Sucess(){
 }
 
 export const RelativeBody = styled.div `
+    box-sizing: border-box;
     position: relative;
     height: 60vh;
     width: 80%;
+    border: 1px solid black;
+    border-radius: 8px;
 `;
 
 const TotalDiv = styled.div`
@@ -70,8 +73,15 @@ const TotalDiv = styled.div`
     align-items: center;
     justify-content: flex-end;
     padding: 10px 10px;
+    border-top: 1px solid black;
     h3{
-        
+        font-family: 'Roboto', sans-serif;
+        font-style: bold;
+        font-weight: 700;
+        font-size: 13px;
+        line-height: 16px;
+        color: #000000;
+        word-break: break-word;
     }
 `;
 
